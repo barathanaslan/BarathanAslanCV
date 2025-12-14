@@ -15,41 +15,47 @@
     <div class="screen-layout">
         <!-- Desktop Icons -->
         <div class="desktop-icons">
-            <div class="desktop-icon">
+            <div class="desktop-icon" ondblclick="showClippy()">
                 <img src="https://win98icons.alexmeub.com/icons/png/computer_explorer-4.png" alt="My Computer">
                 <span>My Computer</span>
             </div>
-            <div class="desktop-icon">
+            <div class="desktop-icon" ondblclick="showClippy()">
                 <img src="https://win98icons.alexmeub.com/icons/png/recycle_bin_full-4.png" alt="Recycle Bin">
                 <span>Recycle Bin</span>
             </div>
-            <div class="desktop-icon">
+            <div class="desktop-icon" ondblclick="showClippy()">
                 <img src="https://win98icons.alexmeub.com/icons/png/directory_closed-4.png" alt="My Documents">
                 <span>My Documents</span>
             </div>
-            <div class="desktop-icon">
+            <div class="desktop-icon" ondblclick="showClippy()">
                 <img src="https://win98icons.alexmeub.com/icons/png/msie1-4.png" alt="Internet Explorer">
                 <span>Internet Explorer</span>
             </div>
-            <div class="desktop-icon">
+            <div class="desktop-icon" ondblclick="showClippy()">
                 <img src="https://win98icons.alexmeub.com/icons/png/notepad-5.png" alt="Notepad">
                 <span>Notepad</span>
+            </div>
+            <!-- New CV Icon -->
+            <div class="desktop-icon" ondblclick="openCV()">
+                <img src="https://win98icons.alexmeub.com/icons/png/file_lines-0.png" alt="CV Doc">
+                <span>CV - Barathan Aslan.doc</span>
             </div>
         </div>
 
         <!-- Main Window (CV) -->
-        <div class="window main-window" id="cv-window">
-            <div class="title-bar">
+        <div class="window main-window" id="cv-window" style="display: none;">
+            <!-- Hidden by default initially or managed by script -->
+            <div class="title-bar" id="cv-title-bar">
                 <div class="title-bar-text">CV - Barathan Aslan.doc</div>
                 <div class="title-bar-controls">
-                    <button aria-label="Minimize"></button>
-                    <button aria-label="Maximize"></button>
+                    <button aria-label="Minimize" onclick="minimizeWindow()"></button>
+                    <button aria-label="Maximize" onclick="maximizeWindow()"></button>
                     <button aria-label="Close" onclick="closeWindow()"></button>
                 </div>
             </div>
             <div class="window-body">
                 <div class="toolbar status-bar">
-                    <button onclick="window.print()" style="font-weight: bold;">Export PDF</button>
+                    <button onclick="exportPDF()" style="font-weight: bold;">Export PDF</button>
                     <p class="status-bar-field">Press button to save as PDF</p>
                 </div>
 
@@ -72,7 +78,8 @@
                             Senior Computer Engineering student at Boğaziçi University with a fascination for pattern
                             recognition and prediction. I apply this natural tendency across domains—from training ML &
                             LLM
-                            models to analyzing markets. I value the process over outcomes. I express myself through
+                            models to analyzing markets. I apply this natural tendency across domains—from training ML &
+                            LLM models to analyzing markets. I value the process over outcomes. I express myself through
                             music and explore interconnections in economics, international politics, and history.
                             Constantly
                             seeking to understand how systems work, predict how they'll evolve, and learn from both
@@ -241,8 +248,13 @@
                                         href="https://www.coursera.org/account/accomplishments/verify/TBV01IZTDZHH">Python
                                         and Machine-Learning for Asset Management with Alternative Data Sets</a></span>
                             </li>
-                            <li><a href="https://www.coursera.org/account/accomplishments/verify/PY9CRYCQNVST">Fundamentals
-                                    of Reinforcement Learning</a></li>
+                            <li>Reinforcement Learning
+                                <span class="subitem"><a
+                                        href="https://www.coursera.org/account/accomplishments/verify/PY9CRYCQNVST">Fundamentals
+                                        of Reinforcement Learning</a>, <a
+                                        href="https://www.coursera.org/account/accomplishments/verify/ZEGEBRR8KF1G">Sample-based
+                                        Learning Methods</a></span>
+                            </li>
                         </ul>
                     </section>
 
@@ -253,27 +265,33 @@
                         <div class="section-heading">ATTENDED EVENTS</div>
 
                         <ul class="events-list">
+                            <li>AlgoRun Hackathon 2025: 1st place</li>
                             <li>Datathon AI 2024 – ITU AI Club: 1st place (1/91 qualification, 1/30 finals)</li>
                             <li>Trendyol Hackathon 2025: 6th place (out of 302 teams)</li>
                             <li>Teknofest T3 AI Hackathon 2024: Final Stage – built one of the largest and
                                 highest-quality synthetic Turkish LLM datasets (~1B tokens)</li>
                             <li>Additional participation in multiple hackathons & datathons</li>
-                            <li>AWS Community Day Türkiye 2024</li>
+                            <li>AWS Community Day Türkiye 2024, Claude Code Meetup Istanbul</li>
                             <li>On-Site visit to TUSAŞ, BIST, TCMB</li>
                         </ul>
                     </section>
                 </div> <!-- End cv-content -->
             </div>
+            <!-- Resize Handles -->
+            <div class="resizer-l"></div>
+            <div class="resizer-r"></div>
+            <div class="resizer-b"></div>
+            <div class="resizer-br"></div>
         </div>
 
         <!-- Taskbar -->
         <div class="taskbar">
-            <button class="start-button">
+            <button class="start-button" onclick="showClippy()">
                 <img src="https://win98icons.alexmeub.com/icons/png/windows-0.png" alt="Start">
                 <b>Start</b>
             </button>
             <div class="taskbar-divider"></div>
-            <div class="task-button active" onclick="toggleWindow()" id="taskbar-cv">
+            <div class="task-button" onclick="toggleWindow()" id="taskbar-cv" style="display: none;">
                 <img src="https://win98icons.alexmeub.com/icons/png/wordpad-0.png" alt="CV">
                 CV - Baratha...
             </div>
@@ -281,22 +299,233 @@
         </div>
     </div>
 
+    <!-- Clippy Popup -->
+    <div id="clippy-popup" class="clippy-popup">
+        <div class="clippy-img"></div>
+        <div class="clippy-bubble">
+            <p>It looks like you're trying to open something I haven't worked on yet!</p>
+            <p style="font-size: 11px; margin-top: 5px;">Maybe later... 📎</p>
+        </div>
+    </div>
+
     <script>
+        const cvWindow = document.getElementById('cv-window');
+        const taskbarBtn = document.getElementById('taskbar-cv');
+        const titleBar = document.getElementById('cv-title-bar');
+
+        let isDragging = false;
+        let startX, startY, initialLeft, initialTop;
+
+        // Clippy popup
+        const clippyPopup = document.getElementById('clippy-popup');
+        let clippyTimeout;
+
+        function showClippy() {
+            // Clear any existing timeout
+            if (clippyTimeout) clearTimeout(clippyTimeout);
+
+            // Remove fade-out class and show
+            clippyPopup.classList.remove('fade-out');
+            clippyPopup.classList.add('show');
+
+            // Auto-hide after 3 seconds
+            clippyTimeout = setTimeout(() => {
+                clippyPopup.classList.add('fade-out');
+                setTimeout(() => {
+                    clippyPopup.classList.remove('show', 'fade-out');
+                }, 300);
+            }, 3000);
+        }
+
+        // Open/Close Logic
+        function openCV() {
+            cvWindow.style.setProperty('display', 'flex', 'important');
+            taskbarBtn.style.display = 'flex';
+            taskbarBtn.classList.add('active');
+
+            // Bring to front or ensure initial center if not set
+            // Check if top/left are set. If not (first open), calculate center.
+            if (!cvWindow.style.left) {
+                centerWindow();
+            }
+        }
+
+        function centerWindow() {
+            const rect = cvWindow.getBoundingClientRect();
+            const winWidth = window.innerWidth;
+            const winHeight = window.innerHeight;
+
+            // Default size 900x600 if not set
+            const width = rect.width || 900;
+            const height = rect.height || 600;
+
+            const left = (winWidth - width) / 2;
+            const top = (winHeight - height) / 2 > 0 ? (winHeight - height) / 2 : 50;
+
+            cvWindow.style.width = `${width}px`;
+            cvWindow.style.left = `${left}px`;
+            cvWindow.style.top = `${top}px`;
+            cvWindow.style.transform = 'none'; // Ensure no CSS transform
+            cvWindow.style.margin = '0'; // Ensure no margin auto
+        }
+
         function closeWindow() {
-            document.getElementById('cv-window').style.display = 'none';
-            document.getElementById('taskbar-cv').classList.remove('active');
+            cvWindow.style.setProperty('display', 'none', 'important');
+            taskbarBtn.style.display = 'none';
+            taskbarBtn.classList.remove('active');
+        }
+
+        function minimizeWindow() {
+            cvWindow.style.setProperty('display', 'none', 'important');
+            taskbarBtn.classList.remove('active');
+        }
+
+        function maximizeWindow() {
+            // Simplified maximize logic
+            if (cvWindow.dataset.state === 'maximized') {
+                // Restore
+                cvWindow.style.width = cvWindow.dataset.prevWidth || '900px';
+                cvWindow.style.height = cvWindow.dataset.prevHeight || '';
+                cvWindow.style.top = cvWindow.dataset.prevTop || '50px';
+                cvWindow.style.left = cvWindow.dataset.prevLeft || '100px';
+                cvWindow.dataset.state = 'normal';
+                // No transform needed
+            } else {
+                // Save current state
+                cvWindow.dataset.prevWidth = cvWindow.style.width;
+                cvWindow.dataset.prevHeight = cvWindow.style.height;
+                cvWindow.dataset.prevTop = cvWindow.style.top;
+                cvWindow.dataset.prevLeft = cvWindow.style.left;
+
+                // Maximize
+                cvWindow.style.width = '100vw';
+                cvWindow.style.height = 'calc(100vh - 28px)'; // Subtract taskbar
+                cvWindow.style.top = '0';
+                cvWindow.style.left = '0';
+                cvWindow.dataset.state = 'maximized';
+            }
         }
 
         function toggleWindow() {
-            const win = document.getElementById('cv-window');
-            const btn = document.getElementById('taskbar-cv');
-            if (win.style.display === 'none') {
-                win.style.display = 'block';
-                btn.classList.add('active');
+            if (cvWindow.style.display === 'none' || getComputedStyle(cvWindow).display === 'none') {
+                cvWindow.style.setProperty('display', 'flex', 'important');
+                // Ensure centered if first time
+                if (!cvWindow.style.left) centerWindow();
+                taskbarBtn.classList.add('active');
             } else {
-                win.style.display = 'none';
-                btn.classList.remove('active');
+                cvWindow.style.setProperty('display', 'none', 'important');
+                taskbarBtn.classList.remove('active');
             }
+        }
+
+        // Dragging Logic
+        titleBar.addEventListener('mousedown', (e) => {
+            if (e.target.closest('button')) return; // Don't drag if clicking buttons
+            isDragging = true;
+            startX = e.clientX;
+            startY = e.clientY;
+
+            // Get current computed position
+            const rect = cvWindow.getBoundingClientRect();
+            // Since we use absolute positioning now without transforms, 
+            // the current style.left/top should count, or offsetLeft/Top
+            initialLeft = cvWindow.offsetLeft;
+            initialTop = cvWindow.offsetTop;
+
+            document.addEventListener('mousemove', drag);
+            document.addEventListener('mouseup', stopDrag);
+        });
+
+        function drag(e) {
+            if (!isDragging) return;
+            const dx = e.clientX - startX;
+            const dy = e.clientY - startY;
+
+            cvWindow.style.left = `${initialLeft + dx}px`;
+            cvWindow.style.top = `${initialTop + dy}px`;
+        }
+
+        function stopDrag() {
+            isDragging = false;
+            document.removeEventListener('mousemove', drag);
+            document.removeEventListener('mouseup', stopDrag);
+        }
+
+
+        // Resizing Logic
+        const resizers = document.querySelectorAll('.resizer-r, .resizer-b, .resizer-br, .resizer-l');
+        let isResizing = false;
+        let currentResizer;
+        let initialWidth, initialHeight;
+
+        // Limits
+        const MIN_WIDTH = 300;
+        const MIN_HEIGHT = 400;
+        const MAX_WIDTH = window.innerWidth;
+        const MAX_HEIGHT = window.innerHeight;
+
+        resizers.forEach(resizer => {
+            resizer.addEventListener('mousedown', (e) => {
+                isResizing = true;
+                currentResizer = resizer;
+                startX = e.clientX;
+                startY = e.clientY;
+
+                // Get current size/pos
+                const rect = cvWindow.getBoundingClientRect();
+                initialWidth = rect.width;
+                initialHeight = rect.height;
+                initialLeft = rect.left; // Needed for left resize
+
+                document.addEventListener('mousemove', resize);
+                document.addEventListener('mouseup', stopResize);
+                e.preventDefault(); // Prevent text selection
+            });
+        });
+
+        function resize(e) {
+            if (!isResizing) return;
+            const dx = e.clientX - startX;
+            const dy = e.clientY - startY;
+
+            if (currentResizer.classList.contains('resizer-r')) {
+                const newWidth = Math.min(Math.max(initialWidth + dx, MIN_WIDTH), MAX_WIDTH);
+                cvWindow.style.width = `${newWidth}px`;
+            } else if (currentResizer.classList.contains('resizer-b')) {
+                const newHeight = Math.min(Math.max(initialHeight + dy, MIN_HEIGHT), MAX_HEIGHT);
+                cvWindow.style.height = `${newHeight}px`;
+            } else if (currentResizer.classList.contains('resizer-br')) {
+                const newWidth = Math.min(Math.max(initialWidth + dx, MIN_WIDTH), MAX_WIDTH);
+                const newHeight = Math.min(Math.max(initialHeight + dy, MIN_HEIGHT), MAX_HEIGHT);
+                cvWindow.style.width = `${newWidth}px`;
+                cvWindow.style.height = `${newHeight}px`;
+            } else if (currentResizer.classList.contains('resizer-l')) {
+                // For left resize, we change width AND left position
+                // Width increases as we drag left (negative dx)
+                let newWidth = initialWidth - dx;
+
+                // Construct constraints
+                if (newWidth < MIN_WIDTH) newWidth = MIN_WIDTH;
+                if (newWidth > MAX_WIDTH) newWidth = MAX_WIDTH;
+
+                // Calculate new left based on width change
+                // left = right_boundary - newWidth
+                // right_boundary = initialLeft + initialWidth
+                const rightBoundary = initialLeft + initialWidth;
+                const newLeft = rightBoundary - newWidth;
+
+                // Only apply if it changed
+                if (newWidth !== initialWidth && newWidth >= MIN_WIDTH) { // Minimal check again
+                    cvWindow.style.width = `${newWidth}px`;
+                    cvWindow.style.left = `${newLeft}px`;
+                }
+            }
+        }
+
+        function stopResize() {
+            isResizing = false;
+            document.removeEventListener('mousemove', resize);
+            document.removeEventListener('mouseup', stopResize);
         }
 
         // Simple clock
@@ -311,7 +540,19 @@
         }
         setInterval(updateTime, 60000);
         updateTime();
+
+        // Open on load
+        // Initial center calculation
+        // Open on load
+        // Initial center calculation
+        window.addEventListener('load', () => {
+            centerWindow();
+            openCV();
+            // Reveal the page after positioning is complete
+            document.querySelector('.screen-layout').classList.add('ready');
+        }); 
     </script>
+    <script src="print.js"></script>
 </body>
 
 </html>
