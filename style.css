@@ -1,7 +1,8 @@
 /* Screen Styles (Windows 97 Theme) */
 body {
-    background-color: #008080; /* Classic Teal */
-     /* 98.css will handle the font-family for UI elements, but we set a default */
+    background-color: #008080;
+    /* Classic Teal */
+    /* 98.css will handle the font-family for UI elements, but we set a default */
 }
 
 .screen-layout {
@@ -23,7 +24,8 @@ body {
 
 .toolbar {
     padding: 5px;
-    border-bottom: 1px solid #808080; /* Simple divider */
+    border-bottom: 1px solid #808080;
+    /* Simple divider */
     margin-bottom: 10px;
     display: flex;
     gap: 10px;
@@ -34,10 +36,12 @@ body {
     background-color: #ffffff;
     border: inset 2px;
     padding: 20px;
-    height: 600px; /* Scrollable area */
+    height: 600px;
+    /* Scrollable area */
     overflow-y: scroll;
     color: black;
-    font-family: 'Arial', sans-serif; /* Keep readable or use 'Times New Roman' */
+    font-family: 'Arial', sans-serif;
+    /* Keep readable or use 'Times New Roman' */
 }
 
 .cv-content h1 {
@@ -47,8 +51,10 @@ body {
     color: #000;
 }
 
-.cv-content h2, .section-heading {
-    background: #000080; /* Navy blue header background like old headings */
+.cv-content h2,
+.section-heading {
+    background: #000080;
+    /* Navy blue header background like old headings */
     color: white;
     padding: 2px 5px;
     font-family: "MS Sans Serif", Arial, sans-serif;
@@ -66,259 +72,288 @@ body {
 
 /* Print Styles - EXACT COPY of Original + Reset for Window wrappers */
 @media print {
+
     /* Hide UI elements */
-    .title-bar, .toolbar, .status-bar, .screen-only { 
-        display: none !important; 
+    .title-bar,
+    .toolbar,
+    .status-bar,
+    .screen-only {
+        display: none !important;
     }
-    
+
+    /* Remove browser default headers/footers */
+    @page {
+        margin: 0.5cm;
+        size: auto;
+    }
+
     body {
         background-color: white !important;
         margin: 0 !important;
         padding: 0 !important;
+        /* Reduce base font size slightly to fit one page */
+        font-size: 13px !important;
+        width: 100%;
     }
-    
+
     .screen-layout {
         display: block !important;
         padding: 0 !important;
     }
-    
+
     .main-window {
         width: 100% !important;
         box-shadow: none !important;
         margin: 0 !important;
     }
-    
+
     /* Undo 98.css window styles */
     .window {
         box-shadow: none !important;
         border: none !important;
         background: transparent !important;
     }
-    
+
     .window-body {
         margin: 0 !important;
     }
-    
+
     .cv-content {
         border: none !important;
         background: transparent !important;
         height: auto !important;
         overflow: visible !important;
         padding: 0 !important;
+        margin: 0 auto !important;
+        width: 100% !important;
     }
 
-    /* ORIGINAL CV STYLES RESTORED BELOW */
-    
-     /* Reset and basic styling */
-     * {
+    /* ORIGINAL CV STYLES RESTORED & OPTIMIZED FOR ONE PAGE */
+
+    /* Reset and basic styling */
+    * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
         font-family: Arial, sans-serif;
     }
-    
+
     body {
-        max-width: 1100px;
-        margin: 0 auto;
-        padding: 20px;
         color: #333;
-        line-height: 1.5;
+        line-height: 1.4;
+        /* Slightly tighter line height */
     }
-    
+
     /* Header and basic info */
     header {
         text-align: center;
-        margin-bottom: 20px;
+        margin-bottom: 10px;
+        /* Reduced margin */
     }
-    
+
     h1 {
-        font-size: 24px;
-        margin-bottom: 10px;
-        font-family: Arial, sans-serif; /* Override retro font */
-        color: #333; /* Override retro color */
+        font-size: 20px;
+        /* Reduced from 24px */
+        margin-bottom: 5px;
+        font-family: Arial, sans-serif;
+        color: #333;
     }
-    
+
     .contact-info {
-        font-size: 14px;
-        margin-bottom: 10px;
+        font-size: 12px;
+        margin-bottom: 5px;
     }
-    
+
     /* Section dividers */
     .section-divider {
         border-top: 1px solid #000;
-        margin: 15px 0;
+        margin: 8px 0;
+        /* Reduced from 15px */
     }
-    
+
     /* Section headings */
     .section-heading {
-        font-size: 16px;
+        font-size: 14px;
+        /* Reduced from 16px */
         font-weight: bold;
         text-transform: uppercase;
-        margin-bottom: 10px;
+        margin-bottom: 5px;
         /* Reset retro styles */
         background: transparent;
         color: #333;
         padding: 0;
         font-family: Arial, sans-serif;
     }
-    
+
     /* Profile section */
     .profile {
-        margin-bottom: 20px;
+        margin-bottom: 10px;
+        /* Reduced from 20px */
     }
-    
+
     /* Two-column layouts */
     .two-column {
         display: flex;
         justify-content: space-between;
     }
-    
+
     .column-left {
-        width: 30%;
+        width: 25%;
+        /* Adjusted column width */
     }
-    
+
     .column-right {
-        width: 68%;
+        width: 73%;
     }
-    
+
     /* Education section */
     .education {
-        margin-bottom: 20px;
+        margin-bottom: 10px;
     }
-    
+
     /* Languages section */
     .languages {
-        margin-bottom: 20px;
+        margin-bottom: 10px;
     }
-    
+
     .language-item {
         display: flex;
         justify-content: space-between;
-        margin-bottom: 5px;
+        margin-bottom: 2px;
     }
-    
+
     /* Experience section */
     .experience {
-        margin-bottom: 20px;
+        margin-bottom: 10px;
     }
-    
+
     .job {
-        margin-bottom: 15px;
+        margin-bottom: 8px;
+        /* Reduced from 15px */
     }
-    
+
     .job-company {
         font-weight: bold;
     }
-    
+
     .job-title {
         font-style: italic;
     }
-    
+
     .job-period {
-        font-size: 14px;
+        font-size: 12px;
     }
-    
+
     .job-details {
-        margin-top: 10px;
+        margin-top: 3px;
+        /* Reduced from 10px */
     }
-    
+
     .job-details ul {
-        padding-left: 20px;
+        padding-left: 15px;
     }
-    
-    /* Links with simple underlines */
+
+    /* Links with simple underlines - BLACK COLOR FIX */
     a {
-        color: inherit; /* Same color as surrounding text */
-        text-decoration: underline; /* Simple underline */
+        color: #000 !important;
+        /* Force black color */
+        text-decoration: none;
+        /* No underline for cleaner print, or keep underline if desired */
     }
-    
+
     a[href]:after {
         content: none !important;
     }
-    
+
     /* Profiles section */
     .profiles {
-        margin-bottom: 20px;
+        margin-bottom: 10px;
     }
-    
+
     .profile-item {
         display: grid;
-        grid-template-columns: 100px 150px 1fr;
-        margin-bottom: 5px;
-        gap: 10px;
+        grid-template-columns: 80px 140px 1fr;
+        margin-bottom: 2px;
+        gap: 5px;
     }
-    
+
     .profile-platform {
         font-weight: normal;
     }
-    
+
     .profile-handle {
         font-weight: normal;
     }
-    
+
     /* Certifications section */
     .certifications {
-        margin-bottom: 20px;
+        margin-bottom: 10px;
     }
-    
+
     .cert-list {
         list-style-type: disc;
-        padding-left: 20px;
-    }
-    
-    .cert-list li {
-        margin-bottom: 5px;
-    }
-    
-    .cert-list .sublist {
-        list-style-type: circle;
-        padding-left: 20px;
-        margin-top: 3px;
-    }
-    
-    .cert-list .subitem {
-        margin-left: 15px;
-        display: block;
-        position: relative;
         padding-left: 15px;
     }
-    
+
+    .cert-list li {
+        margin-bottom: 2px;
+    }
+
+    .cert-list .sublist {
+        list-style-type: circle;
+        padding-left: 15px;
+        margin-top: 1px;
+    }
+
+    .cert-list .subitem {
+        margin-left: 5px;
+        display: block;
+        position: relative;
+        padding-left: 10px;
+        font-size: 0.95em;
+        /* Slightly smaller subtext */
+    }
+
     .cert-list .subitem:before {
         content: "○";
         position: absolute;
         left: 0;
+        font-size: 8px;
+        top: 3px;
     }
-    
+
     /* Events section */
     .events {
-        margin-bottom: 20px;
+        margin-bottom: 10px;
     }
-    
+
     .events-list {
         list-style-type: disc;
-        padding-left: 20px;
-    }
-    
-    .events-list li {
-        margin-bottom: 5px;
-    }
-    
-    .events-list .sublist {
-        list-style-type: circle;
-        padding-left: 20px;
-        margin-top: 3px;
-    }
-    
-    .events-list .subitem {
-        margin-left: 15px;
-        display: block;
-        position: relative;
         padding-left: 15px;
     }
-    
+
+    .events-list li {
+        margin-bottom: 2px;
+    }
+
+    .events-list .sublist {
+        list-style-type: circle;
+        padding-left: 15px;
+        margin-top: 1px;
+    }
+
+    .events-list .subitem {
+        margin-left: 5px;
+        display: block;
+        position: relative;
+        padding-left: 10px;
+    }
+
     .events-list .subitem:before {
         content: "○";
         position: absolute;
         left: 0;
+        font-size: 8px;
+        top: 3px;
     }
 }
