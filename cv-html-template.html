@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barathan Aslan - CV</title>
+    <style>
+        /* Reset and basic styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+            line-height: 1.5;
+        }
+        
+        /* Header and basic info */
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .contact-info {
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        
+        /* Section dividers */
+        .section-divider {
+            border-top: 1px solid #000;
+            margin: 15px 0;
+        }
+        
+        /* Section headings */
+        .section-heading {
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+        
+        /* Profile section */
+        .profile {
+            margin-bottom: 20px;
+        }
+        
+        /* Two-column layouts */
+        .two-column {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .column-left {
+            width: 30%;
+        }
+        
+        .column-right {
+            width: 68%;
+        }
+        
+        /* Education section */
+        .education {
+            margin-bottom: 20px;
+        }
+        
+        /* Languages section */
+        .languages {
+            margin-bottom: 20px;
+        }
+        
+        .language-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+        
+        /* Experience section */
+        .experience {
+            margin-bottom: 20px;
+        }
+        
+        .job {
+            margin-bottom: 15px;
+        }
+        
+        .job-company {
+            font-weight: bold;
+        }
+        
+        .job-title {
+            font-style: italic;
+        }
+        
+        .job-period {
+            font-size: 14px;
+        }
+        
+        .job-details {
+            margin-top: 10px;
+        }
+        
+        .job-details ul {
+            padding-left: 20px;
+        }
+        
+        /* Links with simple underlines */
+        a {
+            color: inherit; /* Same color as surrounding text */
+            text-decoration: underline; /* Simple underline */
+        }
+        
+        @media print {
+            a {
+                color: inherit;
+                text-decoration: underline; /* Keep underline in PDF */
+            }
+            
+            a[href]:after {
+                content: none !important;
+            }
+        }
+        
+        /* Profiles section */
+        .profiles {
+            margin-bottom: 20px;
+        }
+        
+        .profile-item {
+            display: grid;
+            grid-template-columns: 100px 150px 1fr;
+            margin-bottom: 5px;
+            gap: 10px;
+        }
+        
+        .profile-platform {
+            font-weight: normal;
+        }
+        
+        .profile-handle {
+            font-weight: normal;
+        }
+        
+        /* Certifications section */
+        .certifications {
+            margin-bottom: 20px;
+        }
+        
+        .cert-list {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+        
+        .cert-list li {
+            margin-bottom: 5px;
+        }
+        
+        .cert-list .sublist {
+            list-style-type: circle;
+            padding-left: 20px;
+            margin-top: 3px;
+        }
+        
+        .cert-list .subitem {
+            margin-left: 15px;
+            display: block;
+            position: relative;
+            padding-left: 15px;
+        }
+        
+        .cert-list .subitem:before {
+            content: "○";
+            position: absolute;
+            left: 0;
+        }
+        
+        /* Events section */
+        .events {
+            margin-bottom: 20px;
+        }
+        
+        .events-list {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+        
+        .events-list li {
+            margin-bottom: 5px;
+        }
+        
+        .events-list .sublist {
+            list-style-type: circle;
+            padding-left: 20px;
+            margin-top: 3px;
+        }
+        
+        .events-list .subitem {
+            margin-left: 15px;
+            display: block;
+            position: relative;
+            padding-left: 15px;
+        }
+        
+        .events-list .subitem:before {
+            content: "○";
+            position: absolute;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with name and contact info -->
+    <header>
+        <h1><a href="https://www.linkedin.com/in/barathanaslan/">Barathan Aslan</a></h1>
+        <div class="contact-info">
+            İstanbul, Türkiye, +905050206617<br>
+            <a href="mailto:barathanasln@gmail.com">barathanasln@gmail.com</a>
+        </div>
+    </header>
+    
+    <div class="section-divider"></div>
+    
+    <!-- Profile section -->
+    <section class="profile">
+        <div class="section-heading">PROFILE</div>
+        <p>
+            Senior Computer Engineering student at Boğaziçi University with a fascination for pattern
+            recognition and prediction. I apply this natural tendency across domains—from training ML & LLM
+            models to analyzing markets. I value the process over outcomes. I express myself through 
+            music and explore interconnections in economics, international politics, and history. Constantly 
+            seeking to understand how systems work, predict how they'll evolve, and learn from both success and failure.
+        </p>
+    </section>
+    
+    <div class="section-divider"></div>
+    
+    <!-- Education section -->
+    <section class="education">
+        <div class="section-heading">EDUCATION</div>
+        <div class="two-column">
+            <div class="column-left">2021— Present</div>
+            <div class="column-right" style="display: flex; justify-content: space-between;">
+                <div>Computer Engineering, Boğaziçi University</div>
+                <div>İstanbul</div>
+            </div>
+        </div>
+    </section>
+    
+    <div class="section-divider"></div>
+    
+    <!-- Languages section -->
+    <section class="languages">
+        <div class="section-heading">LANGUAGES</div>
+        <div class="language-item">
+            <span>English</span>
+            <span>Highly proficient</span>
+        </div>
+        <div class="language-item">
+            <span>Spanish</span>
+            <span>Beginner</span>
+        </div>
+    </section>
+    
+    <div class="section-divider"></div>
+    
+    <!-- Experience section -->
+    <section class="experience">
+        <div class="section-heading">EXPERIENCE</div>
+        
+        <div class="job">
+            <div class="two-column">
+                <div class="column-left">
+                    <div class="job-company">Pegasus</div>
+                    <div class="job-title">Associate Data Scientist</div>
+                    <div class="job-period">July-Present 2025</div>
+                </div>
+                <div class="column-right">
+                    <div class="job-details">
+                        <ul>
+                            <li>Currently working on data science projects and analytics initiatives.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="job">
+            <div class="two-column">
+                <div class="column-left">
+                    <div class="job-company">Fimple</div>
+                    <div class="job-title">AI Intern</div>
+                    <div class="job-period">June-August 2024</div>
+                </div>
+                <div class="column-right">
+                    <div class="job-details">
+                        <ul>
+                            <li>Prioritized local open-source language models to address privacy concerns. Developed a local chatbot agent enhanced with RAG techniques for the purpose of serving developers using document-based knowledge retrieval.</li>
+                            <li>Partially developed and conducted in-depth research on natural language to SQL query language models aimed at empowering banking personnel with limited technical expertise.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="job">
+            <div class="two-column">
+                <div class="column-left">
+                    <div class="job-company">Doping Technology</div>
+                    <div class="job-title">Software Engineering Intern</div>
+                    <div class="job-period">June-August 2023</div>
+                </div>
+                <div class="column-right">
+                    <div class="job-details">
+                        <ul>
+                            <li>Developed a REST API using a pre-trained BERT model to classify customer issues.</li>
+                            <li>Contributed to Türkiye's first big chatbot agent project: Dopi AI. Implemented prompt engineering techniques in the process and made research on both open source and closed source models. Carried out project development and competition analysis.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <div class="section-divider"></div>
+    
+    <!-- Profiles section -->
+    <section class="profiles">
+        <div class="section-heading">PROFILES</div>
+        
+        <div class="profile-item">
+            <div class="profile-platform">Kaggle</div>
+            <div class="profile-handle"><a href="https://www.kaggle.com/barathanaslan">@barathanaslan</a></div>
+            <div>Competitions, Dataset Creation, ML Models</div>
+        </div>
+        
+        <div class="profile-item">
+            <div class="profile-platform">Github</div>
+            <div class="profile-handle"><a href="https://github.com/barathanaslan">@barathanaslan</a></div>
+            <div>Internship Projects & Personal Projects</div>
+        </div>
+        
+        <div class="profile-item">
+            <div class="profile-platform">Huggingface</div>
+            <div class="profile-handle"><a href="https://huggingface.co/barathanasln">@barathanasln</a></div>
+            <div>Work On Various Language & Image Models, Synthetic Data Creation</div>
+        </div>
+    </section>
+    
+    <div class="section-divider"></div>
+    
+    <!-- Certifications section -->
+    <section class="certifications">
+        <div class="section-heading">CERTIFICATIONS AND COURSES</div>
+        
+        <ul class="cert-list">
+            <li>ANBEAN Finans ve Yatırım Okulu</li>
+            <li>5-Day Gen AI Intensive Course, Kaggle & Google</li>
+            <li><a href="https://www.coursera.org/account/accomplishments/specialization/TY5DZZNUBTTN?utm_source=link&utm_medium=certificate&utm_content=cert_image&utm_campaign=sharing_cta&utm_product=s12n">Machine Learning Specialization, DeepLearning.AI</a>
+                <span class="subitem">Supervised Machine Learning, Advanced Learning Algorithms, Unsupervised Learning, Recommenders, Reinforcement Learning</span>
+            </li>
+            <li><a href="https://www.coursera.org/account/accomplishments/specialization/R2Y8XS4FK50U?utm_source=link&utm_medium=certificate&utm_content=cert_image&utm_campaign=sharing_cta&utm_product=s12n">Deep Learning Specialization, DeepLearning.AI</a>
+                <span class="subitem">Neural Networks and Deep Learning, Improving Deep Neural Networks, Structuring Machine Learning Projects, Convolutional Neural Networks, Sequence Models</span>
+            </li>
+            <li><a href="https://www.udemy.com/certificate/UC-6ea5afe0-9955-440d-a947-809e7b568f5b/">Graph Neural Network, Udemy</a></li>
+            <li>Investment Management with Python and Machine Learning
+                <span class="subitem"><a href="https://www.coursera.org/account/accomplishments/verify/2Q56SBPO2BLC">Introduction to Portfolio Construction and Analysis with Python</a>, <a href="https://www.coursera.org/account/accomplishments/verify/55J64KXCP0K3">Advanced Portfolio Construction and Analysis with Python</a>, <a href="https://www.coursera.org/account/accomplishments/verify/TBV01IZTDZHH">Python and Machine-Learning for Asset Management with Alternative Data Sets</a></span>
+            </li>
+            <li><a href="https://www.coursera.org/account/accomplishments/verify/PY9CRYCQNVST">Fundamentals of Reinforcement Learning</a></li>
+        </ul>
+    </section>
+    
+    <div class="section-divider"></div>
+    
+    <!-- Events section -->
+    <section class="events">
+        <div class="section-heading">ATTENDED EVENTS</div>
+        
+        <ul class="events-list">
+            <li>Datathon AI 2024 – ITU AI Club: 1st place (1/91 qualification, 1/30 finals)</li>
+            <li>Trendyol Hackathon 2025: 6th place (out of 302 teams)</li>
+            <li>Teknofest T3 AI Hackathon 2024: Final Stage – built one of the largest and highest-quality synthetic Turkish LLM datasets (~1B tokens)</li>
+            <li>Additional participation in multiple hackathons & datathons</li>
+            <li>AWS Community Day Türkiye 2024</li>
+            <li>On-Site visit to TUSAŞ, BIST, TCMB</li>
+        </ul>
+    </section>
+</body>
+</html>
