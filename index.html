@@ -15,7 +15,7 @@
     <div class="screen-layout">
         <!-- Desktop Icons -->
         <div class="desktop-icons">
-            <div class="desktop-icon" ondblclick="showClippy()">
+            <div class="desktop-icon" ondblclick="openMyComputer()">
                 <img src="https://win98icons.alexmeub.com/icons/png/computer_explorer-4.png" alt="My Computer">
                 <span>My Computer</span>
             </div>
@@ -284,6 +284,37 @@
             <div class="resizer-br"></div>
         </div>
 
+        <!-- My Computer Window -->
+        <div class="window folder-window" id="mycomputer-window" style="display: none;">
+            <div class="title-bar" id="mycomputer-title-bar">
+                <div class="title-bar-text">My Computer</div>
+                <div class="title-bar-controls">
+                    <button aria-label="Minimize" onclick="minimizeMyComputer()"></button>
+                    <button aria-label="Maximize"></button>
+                    <button aria-label="Close" onclick="closeMyComputer()"></button>
+                </div>
+            </div>
+            <div class="window-body">
+                <div class="folder-toolbar status-bar">
+                    <p class="status-bar-field">3 object(s)</p>
+                </div>
+                <div class="folder-content">
+                    <div class="folder-item" ondblclick="showClippy()">
+                        <img src="https://win98icons.alexmeub.com/icons/png/computer-4.png" alt="Computer">
+                        <span>Barathan'sMacBook</span>
+                    </div>
+                    <div class="folder-item" ondblclick="showClippy()">
+                        <img src="https://win98icons.alexmeub.com/icons/png/computer-4.png" alt="Computer">
+                        <span>Barathan'sMacStudio</span>
+                    </div>
+                    <div class="folder-item" ondblclick="showClippy()">
+                        <img src="https://win98icons.alexmeub.com/icons/png/computer-4.png" alt="Computer">
+                        <span>BarathanNeedsRAMforCudaSetup</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Taskbar -->
         <div class="taskbar">
             <button class="start-button" onclick="showClippy()">
@@ -291,6 +322,10 @@
                 <b>Start</b>
             </button>
             <div class="taskbar-divider"></div>
+            <div class="task-button" onclick="toggleMyComputer()" id="taskbar-mycomputer" style="display: none;">
+                <img src="https://win98icons.alexmeub.com/icons/png/computer_explorer-4.png" alt="My Computer">
+                My Computer
+            </div>
             <div class="task-button" onclick="toggleWindow()" id="taskbar-cv" style="display: none;">
                 <img src="https://win98icons.alexmeub.com/icons/png/wordpad-0.png" alt="CV">
                 CV - Baratha...
@@ -312,6 +347,10 @@
         const cvWindow = document.getElementById('cv-window');
         const taskbarBtn = document.getElementById('taskbar-cv');
         const titleBar = document.getElementById('cv-title-bar');
+
+        const mcWindow = document.getElementById('mycomputer-window');
+        const mcTaskbarBtn = document.getElementById('taskbar-mycomputer');
+        const mcTitleBar = document.getElementById('mycomputer-title-bar');
 
         let isDragging = false;
         let startX, startY, initialLeft, initialTop;
@@ -527,6 +566,70 @@
             document.removeEventListener('mousemove', resize);
             document.removeEventListener('mouseup', stopResize);
         }
+
+        // My Computer window
+        function openMyComputer() {
+            mcWindow.style.setProperty('display', 'flex', 'important');
+            mcTaskbarBtn.style.display = 'flex';
+            mcTaskbarBtn.classList.add('active');
+            bringToFront(mcWindow);
+        }
+
+        function closeMyComputer() {
+            mcWindow.style.setProperty('display', 'none', 'important');
+            mcTaskbarBtn.style.display = 'none';
+            mcTaskbarBtn.classList.remove('active');
+        }
+
+        function minimizeMyComputer() {
+            mcWindow.style.setProperty('display', 'none', 'important');
+            mcTaskbarBtn.classList.remove('active');
+        }
+
+        function toggleMyComputer() {
+            if (mcWindow.style.display === 'none' || getComputedStyle(mcWindow).display === 'none') {
+                mcWindow.style.setProperty('display', 'flex', 'important');
+                mcTaskbarBtn.classList.add('active');
+                bringToFront(mcWindow);
+            } else {
+                mcWindow.style.setProperty('display', 'none', 'important');
+                mcTaskbarBtn.classList.remove('active');
+            }
+        }
+
+        // Z-index management
+        let topZ = 11;
+        function bringToFront(win) {
+            topZ++;
+            win.style.zIndex = topZ;
+        }
+
+        // Bring window to front on mousedown
+        cvWindow.addEventListener('mousedown', () => bringToFront(cvWindow));
+        mcWindow.addEventListener('mousedown', () => bringToFront(mcWindow));
+
+        // Dragging for My Computer
+        mcTitleBar.addEventListener('mousedown', (e) => {
+            if (e.target.closest('button')) return;
+            isDragging = true;
+            startX = e.clientX;
+            startY = e.clientY;
+            initialLeft = mcWindow.offsetLeft;
+            initialTop = mcWindow.offsetTop;
+
+            const moveHandler = (e) => {
+                if (!isDragging) return;
+                mcWindow.style.left = `${initialLeft + (e.clientX - startX)}px`;
+                mcWindow.style.top = `${initialTop + (e.clientY - startY)}px`;
+            };
+            const upHandler = () => {
+                isDragging = false;
+                document.removeEventListener('mousemove', moveHandler);
+                document.removeEventListener('mouseup', upHandler);
+            };
+            document.addEventListener('mousemove', moveHandler);
+            document.addEventListener('mouseup', upHandler);
+        });
 
         // Simple clock
         function updateTime() {
