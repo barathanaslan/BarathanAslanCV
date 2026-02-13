@@ -295,6 +295,91 @@ body {
     filter: brightness(0.5);
 }
 
+/* Mail Window */
+.mail-window {
+    width: 500px;
+    max-width: 90%;
+    height: 400px;
+    position: absolute;
+    top: 80px;
+    left: 300px;
+    z-index: 10;
+    flex-direction: column !important;
+    box-sizing: border-box;
+}
+
+.window.mail-window .window-body {
+    flex: 1 1 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+    margin: 3px;
+    padding: 0;
+    min-height: 0 !important;
+}
+
+.mail-form {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 0;
+    min-height: 0;
+    padding: 5px;
+    gap: 4px;
+}
+
+.mail-field {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 2px 0;
+    border-bottom: 1px solid #c0c0c0;
+}
+
+.mail-field label {
+    font-family: "MS Sans Serif", Arial, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    width: 55px;
+    flex-shrink: 0;
+}
+
+.mail-field input {
+    flex: 1;
+    border: 1px solid #808080;
+    padding: 2px 4px;
+    font-family: "MS Sans Serif", Arial, sans-serif;
+    font-size: 12px;
+}
+
+.mail-body-field {
+    flex: 1 1 0;
+    display: flex;
+    min-height: 0;
+}
+
+.mail-body-field textarea {
+    flex: 1;
+    border: inset 2px;
+    padding: 5px;
+    font-family: "MS Sans Serif", Arial, sans-serif;
+    font-size: 12px;
+    resize: none;
+}
+
+.mail-toolbar {
+    padding: 4px 0;
+    display: flex;
+    gap: 5px;
+    flex-shrink: 0;
+}
+
+.mail-toolbar button {
+    font-family: "MS Sans Serif", Arial, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 3px 20px;
+}
+
 /* Print Styles - EXACT COPY of Original + Reset for Window wrappers */
 @media print {
 
@@ -303,7 +388,8 @@ body {
     .toolbar,
     .status-bar,
     .screen-only,
-    .folder-window {
+    .folder-window,
+    .mail-window {
         display: none !important;
     }
 

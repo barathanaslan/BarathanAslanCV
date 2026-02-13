@@ -35,6 +35,10 @@
                 <img src="https://win98icons.alexmeub.com/icons/png/notepad-5.png" alt="Notepad">
                 <span>Notepad</span>
             </div>
+            <div class="desktop-icon" ondblclick="openMail()">
+                <img src="https://win98icons.alexmeub.com/icons/png/outlook_express-4.png" alt="Send Mail">
+                <span>Send Mail</span>
+            </div>
             <!-- New CV Icon -->
             <div class="desktop-icon" ondblclick="openCV()">
                 <img src="https://win98icons.alexmeub.com/icons/png/file_lines-0.png" alt="CV Doc">
@@ -320,6 +324,44 @@
             <div class="resizer-br"></div>
         </div>
 
+        <!-- Send Mail Window -->
+        <div class="window mail-window" id="mail-window" style="display: none !important;">
+            <div class="title-bar" id="mail-title-bar">
+                <div class="title-bar-text">Send Mail</div>
+                <div class="title-bar-controls">
+                    <button aria-label="Minimize" onclick="minimizeMail()"></button>
+                    <button aria-label="Maximize" onclick="maximizeMail()"></button>
+                    <button aria-label="Close" onclick="closeMail()"></button>
+                </div>
+            </div>
+            <div class="window-body">
+                <form action="https://formsubmit.co/barathanasln@gmail.com" method="POST" class="mail-form">
+                    <input type="hidden" name="_subject" value="Message from CV Website">
+                    <input type="hidden" name="_captcha" value="true">
+                    <input type="hidden" name="_next" value="https://barathanaslan.github.io/BarathanAslan/">
+                    <div class="mail-field">
+                        <label>From:</label>
+                        <input type="email" name="email" placeholder="your@email.com" required>
+                    </div>
+                    <div class="mail-field">
+                        <label>Subject:</label>
+                        <input type="text" name="_subject" placeholder="Subject">
+                    </div>
+                    <div class="mail-body-field">
+                        <textarea name="message" placeholder="Write your message here..." required></textarea>
+                    </div>
+                    <div class="mail-toolbar">
+                        <button type="submit">Send</button>
+                    </div>
+                </form>
+            </div>
+            <!-- Resize Handles -->
+            <div class="resizer-l"></div>
+            <div class="resizer-r"></div>
+            <div class="resizer-b"></div>
+            <div class="resizer-br"></div>
+        </div>
+
         <!-- Taskbar -->
         <div class="taskbar">
             <button class="start-button" onclick="showClippy()">
@@ -330,6 +372,10 @@
             <div class="task-button" onclick="toggleMyComputer()" id="taskbar-mycomputer" style="display: none;">
                 <img src="https://win98icons.alexmeub.com/icons/png/computer_explorer-4.png" alt="My Computer">
                 My Computer
+            </div>
+            <div class="task-button" onclick="toggleMail()" id="taskbar-mail" style="display: none;">
+                <img src="https://win98icons.alexmeub.com/icons/png/outlook_express-4.png" alt="Send Mail">
+                Send Mail
             </div>
             <div class="task-button" onclick="toggleWindow()" id="taskbar-cv" style="display: none;">
                 <img src="https://win98icons.alexmeub.com/icons/png/wordpad-0.png" alt="CV">
@@ -356,6 +402,10 @@
         const mcWindow = document.getElementById('mycomputer-window');
         const mcTaskbarBtn = document.getElementById('taskbar-mycomputer');
         const mcTitleBar = document.getElementById('mycomputer-title-bar');
+
+        const mailWindow = document.getElementById('mail-window');
+        const mailTaskbarBtn = document.getElementById('taskbar-mail');
+        const mailTitleBar = document.getElementById('mail-title-bar');
 
         // Clippy popup
         const clippyPopup = document.getElementById('clippy-popup');
@@ -551,6 +601,56 @@
             }
         }
 
+        // Mail window
+        function openMail() {
+            mailWindow.style.setProperty('display', 'flex', 'important');
+            mailTaskbarBtn.style.display = 'flex';
+            mailTaskbarBtn.classList.add('active');
+            bringToFront(mailWindow);
+        }
+
+        function closeMail() {
+            mailWindow.style.setProperty('display', 'none', 'important');
+            mailTaskbarBtn.style.display = 'none';
+            mailTaskbarBtn.classList.remove('active');
+        }
+
+        function minimizeMail() {
+            mailWindow.style.setProperty('display', 'none', 'important');
+            mailTaskbarBtn.classList.remove('active');
+        }
+
+        function maximizeMail() {
+            if (mailWindow.dataset.state === 'maximized') {
+                mailWindow.style.width = mailWindow.dataset.prevWidth || '500px';
+                mailWindow.style.height = mailWindow.dataset.prevHeight || '400px';
+                mailWindow.style.top = mailWindow.dataset.prevTop || '80px';
+                mailWindow.style.left = mailWindow.dataset.prevLeft || '300px';
+                mailWindow.dataset.state = 'normal';
+            } else {
+                mailWindow.dataset.prevWidth = mailWindow.style.width;
+                mailWindow.dataset.prevHeight = mailWindow.style.height;
+                mailWindow.dataset.prevTop = mailWindow.style.top;
+                mailWindow.dataset.prevLeft = mailWindow.style.left;
+                mailWindow.style.width = '100vw';
+                mailWindow.style.height = 'calc(100vh - 28px)';
+                mailWindow.style.top = '0';
+                mailWindow.style.left = '0';
+                mailWindow.dataset.state = 'maximized';
+            }
+        }
+
+        function toggleMail() {
+            if (mailWindow.style.display === 'none' || getComputedStyle(mailWindow).display === 'none') {
+                mailWindow.style.setProperty('display', 'flex', 'important');
+                mailTaskbarBtn.classList.add('active');
+                bringToFront(mailWindow);
+            } else {
+                mailWindow.style.setProperty('display', 'none', 'important');
+                mailTaskbarBtn.classList.remove('active');
+            }
+        }
+
         // Z-index management
         let topZ = 11;
         function bringToFront(win) {
@@ -561,6 +661,7 @@
         // Bring window to front on mousedown
         cvWindow.addEventListener('mousedown', () => bringToFront(cvWindow));
         mcWindow.addEventListener('mousedown', () => bringToFront(mcWindow));
+        mailWindow.addEventListener('mousedown', () => bringToFront(mailWindow));
 
         // Generic drag setup
         function makeDraggable(titleBarEl, windowEl) {
@@ -586,6 +687,7 @@
             });
         }
         makeDraggable(mcTitleBar, mcWindow);
+        makeDraggable(mailTitleBar, mailWindow);
 
         // Simple clock
         function updateTime() {
