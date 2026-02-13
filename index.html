@@ -290,13 +290,13 @@
                 <div class="title-bar-text">My Computer</div>
                 <div class="title-bar-controls">
                     <button aria-label="Minimize" onclick="minimizeMyComputer()"></button>
-                    <button aria-label="Maximize"></button>
+                    <button aria-label="Maximize" onclick="maximizeMyComputer()"></button>
                     <button aria-label="Close" onclick="closeMyComputer()"></button>
                 </div>
             </div>
             <div class="window-body">
-                <div class="folder-toolbar status-bar">
-                    <p class="status-bar-field">3 object(s)</p>
+                <div class="toolbar">
+                    <p style="font-size: 11px; font-family: 'MS Sans Serif', Arial, sans-serif;">3 object(s)</p>
                 </div>
                 <div class="folder-content">
                     <div class="folder-item" ondblclick="showClippy()">
@@ -313,6 +313,11 @@
                     </div>
                 </div>
             </div>
+            <!-- Resize Handles -->
+            <div class="resizer-l"></div>
+            <div class="resizer-r"></div>
+            <div class="resizer-b"></div>
+            <div class="resizer-br"></div>
         </div>
 
         <!-- Taskbar -->
@@ -351,9 +356,6 @@
         const mcWindow = document.getElementById('mycomputer-window');
         const mcTaskbarBtn = document.getElementById('taskbar-mycomputer');
         const mcTitleBar = document.getElementById('mycomputer-title-bar');
-
-        let isDragging = false;
-        let startX, startY, initialLeft, initialTop;
 
         // Clippy popup
         const clippyPopup = document.getElementById('clippy-popup');
@@ -458,114 +460,46 @@
         }
 
         // Dragging Logic
-        titleBar.addEventListener('mousedown', (e) => {
-            if (e.target.closest('button')) return; // Don't drag if clicking buttons
-            isDragging = true;
-            startX = e.clientX;
-            startY = e.clientY;
-
-            // Get current computed position
-            const rect = cvWindow.getBoundingClientRect();
-            // Since we use absolute positioning now without transforms, 
-            // the current style.left/top should count, or offsetLeft/Top
-            initialLeft = cvWindow.offsetLeft;
-            initialTop = cvWindow.offsetTop;
-
-            document.addEventListener('mousemove', drag);
-            document.addEventListener('mouseup', stopDrag);
-        });
-
-        function drag(e) {
-            if (!isDragging) return;
-            const dx = e.clientX - startX;
-            const dy = e.clientY - startY;
-
-            cvWindow.style.left = `${initialLeft + dx}px`;
-            cvWindow.style.top = `${initialTop + dy}px`;
-        }
-
-        function stopDrag() {
-            isDragging = false;
-            document.removeEventListener('mousemove', drag);
-            document.removeEventListener('mouseup', stopDrag);
-        }
+        makeDraggable(titleBar, cvWindow);
 
 
-        // Resizing Logic
-        const resizers = document.querySelectorAll('.resizer-r, .resizer-b, .resizer-br, .resizer-l');
-        let isResizing = false;
-        let currentResizer;
-        let initialWidth, initialHeight;
-
-        // Limits
+        // Resizing Logic (works for any window with .resizer-* children)
         const MIN_WIDTH = 300;
-        const MIN_HEIGHT = 400;
+        const MIN_HEIGHT = 200;
         const MAX_WIDTH = window.innerWidth;
         const MAX_HEIGHT = window.innerHeight;
 
-        resizers.forEach(resizer => {
+        document.querySelectorAll('.resizer-r, .resizer-b, .resizer-br, .resizer-l').forEach(resizer => {
             resizer.addEventListener('mousedown', (e) => {
-                isResizing = true;
-                currentResizer = resizer;
-                startX = e.clientX;
-                startY = e.clientY;
+                const win = resizer.closest('.window');
+                const sx = e.clientX, sy = e.clientY;
+                const rect = win.getBoundingClientRect();
+                const iw = rect.width, ih = rect.height, il = rect.left;
+                e.preventDefault();
 
-                // Get current size/pos
-                const rect = cvWindow.getBoundingClientRect();
-                initialWidth = rect.width;
-                initialHeight = rect.height;
-                initialLeft = rect.left; // Needed for left resize
-
-                document.addEventListener('mousemove', resize);
-                document.addEventListener('mouseup', stopResize);
-                e.preventDefault(); // Prevent text selection
+                const onMove = (e) => {
+                    const dx = e.clientX - sx, dy = e.clientY - sy;
+                    if (resizer.classList.contains('resizer-r')) {
+                        win.style.width = `${Math.min(Math.max(iw + dx, MIN_WIDTH), MAX_WIDTH)}px`;
+                    } else if (resizer.classList.contains('resizer-b')) {
+                        win.style.height = `${Math.min(Math.max(ih + dy, MIN_HEIGHT), MAX_HEIGHT)}px`;
+                    } else if (resizer.classList.contains('resizer-br')) {
+                        win.style.width = `${Math.min(Math.max(iw + dx, MIN_WIDTH), MAX_WIDTH)}px`;
+                        win.style.height = `${Math.min(Math.max(ih + dy, MIN_HEIGHT), MAX_HEIGHT)}px`;
+                    } else if (resizer.classList.contains('resizer-l')) {
+                        let nw = Math.min(Math.max(iw - dx, MIN_WIDTH), MAX_WIDTH);
+                        win.style.width = `${nw}px`;
+                        win.style.left = `${il + iw - nw}px`;
+                    }
+                };
+                const onUp = () => {
+                    document.removeEventListener('mousemove', onMove);
+                    document.removeEventListener('mouseup', onUp);
+                };
+                document.addEventListener('mousemove', onMove);
+                document.addEventListener('mouseup', onUp);
             });
         });
-
-        function resize(e) {
-            if (!isResizing) return;
-            const dx = e.clientX - startX;
-            const dy = e.clientY - startY;
-
-            if (currentResizer.classList.contains('resizer-r')) {
-                const newWidth = Math.min(Math.max(initialWidth + dx, MIN_WIDTH), MAX_WIDTH);
-                cvWindow.style.width = `${newWidth}px`;
-            } else if (currentResizer.classList.contains('resizer-b')) {
-                const newHeight = Math.min(Math.max(initialHeight + dy, MIN_HEIGHT), MAX_HEIGHT);
-                cvWindow.style.height = `${newHeight}px`;
-            } else if (currentResizer.classList.contains('resizer-br')) {
-                const newWidth = Math.min(Math.max(initialWidth + dx, MIN_WIDTH), MAX_WIDTH);
-                const newHeight = Math.min(Math.max(initialHeight + dy, MIN_HEIGHT), MAX_HEIGHT);
-                cvWindow.style.width = `${newWidth}px`;
-                cvWindow.style.height = `${newHeight}px`;
-            } else if (currentResizer.classList.contains('resizer-l')) {
-                // For left resize, we change width AND left position
-                // Width increases as we drag left (negative dx)
-                let newWidth = initialWidth - dx;
-
-                // Construct constraints
-                if (newWidth < MIN_WIDTH) newWidth = MIN_WIDTH;
-                if (newWidth > MAX_WIDTH) newWidth = MAX_WIDTH;
-
-                // Calculate new left based on width change
-                // left = right_boundary - newWidth
-                // right_boundary = initialLeft + initialWidth
-                const rightBoundary = initialLeft + initialWidth;
-                const newLeft = rightBoundary - newWidth;
-
-                // Only apply if it changed
-                if (newWidth !== initialWidth && newWidth >= MIN_WIDTH) { // Minimal check again
-                    cvWindow.style.width = `${newWidth}px`;
-                    cvWindow.style.left = `${newLeft}px`;
-                }
-            }
-        }
-
-        function stopResize() {
-            isResizing = false;
-            document.removeEventListener('mousemove', resize);
-            document.removeEventListener('mouseup', stopResize);
-        }
 
         // My Computer window
         function openMyComputer() {
@@ -584,6 +518,26 @@
         function minimizeMyComputer() {
             mcWindow.style.setProperty('display', 'none', 'important');
             mcTaskbarBtn.classList.remove('active');
+        }
+
+        function maximizeMyComputer() {
+            if (mcWindow.dataset.state === 'maximized') {
+                mcWindow.style.width = mcWindow.dataset.prevWidth || '550px';
+                mcWindow.style.height = mcWindow.dataset.prevHeight || '350px';
+                mcWindow.style.top = mcWindow.dataset.prevTop || '100px';
+                mcWindow.style.left = mcWindow.dataset.prevLeft || '200px';
+                mcWindow.dataset.state = 'normal';
+            } else {
+                mcWindow.dataset.prevWidth = mcWindow.style.width;
+                mcWindow.dataset.prevHeight = mcWindow.style.height;
+                mcWindow.dataset.prevTop = mcWindow.style.top;
+                mcWindow.dataset.prevLeft = mcWindow.style.left;
+                mcWindow.style.width = '100vw';
+                mcWindow.style.height = 'calc(100vh - 28px)';
+                mcWindow.style.top = '0';
+                mcWindow.style.left = '0';
+                mcWindow.dataset.state = 'maximized';
+            }
         }
 
         function toggleMyComputer() {
@@ -608,28 +562,30 @@
         cvWindow.addEventListener('mousedown', () => bringToFront(cvWindow));
         mcWindow.addEventListener('mousedown', () => bringToFront(mcWindow));
 
-        // Dragging for My Computer
-        mcTitleBar.addEventListener('mousedown', (e) => {
-            if (e.target.closest('button')) return;
-            isDragging = true;
-            startX = e.clientX;
-            startY = e.clientY;
-            initialLeft = mcWindow.offsetLeft;
-            initialTop = mcWindow.offsetTop;
+        // Generic drag setup
+        function makeDraggable(titleBarEl, windowEl) {
+            titleBarEl.addEventListener('mousedown', (e) => {
+                if (e.target.closest('button')) return;
+                let dragging = true;
+                const sx = e.clientX, sy = e.clientY;
+                const il = windowEl.offsetLeft, it = windowEl.offsetTop;
+                bringToFront(windowEl);
 
-            const moveHandler = (e) => {
-                if (!isDragging) return;
-                mcWindow.style.left = `${initialLeft + (e.clientX - startX)}px`;
-                mcWindow.style.top = `${initialTop + (e.clientY - startY)}px`;
-            };
-            const upHandler = () => {
-                isDragging = false;
-                document.removeEventListener('mousemove', moveHandler);
-                document.removeEventListener('mouseup', upHandler);
-            };
-            document.addEventListener('mousemove', moveHandler);
-            document.addEventListener('mouseup', upHandler);
-        });
+                const onMove = (e) => {
+                    if (!dragging) return;
+                    windowEl.style.left = `${il + (e.clientX - sx)}px`;
+                    windowEl.style.top = `${it + (e.clientY - sy)}px`;
+                };
+                const onUp = () => {
+                    dragging = false;
+                    document.removeEventListener('mousemove', onMove);
+                    document.removeEventListener('mouseup', onUp);
+                };
+                document.addEventListener('mousemove', onMove);
+                document.addEventListener('mouseup', onUp);
+            });
+        }
+        makeDraggable(mcTitleBar, mcWindow);
 
         // Simple clock
         function updateTime() {
